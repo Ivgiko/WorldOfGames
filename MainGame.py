@@ -2,13 +2,23 @@ import Live
 from CurrencyRouletteGame import play as roulette
 from MemoryGame import play as memory
 from GuessGame import play as guess
+from Score import add_score as score
 
 print(Live.welcome("Guy"))
 game, difficulty = Live.load_game()
 if game == 1:
-    print("You won!" if memory(difficulty) is True else "You lost")
+    if memory(difficulty) is True:
+        score(difficulty)
+        print("You won!")
+    else: print("You lost")
 if game == 2:
-    print("You won!" if guess(difficulty) is True else "You lost")
+    if guess(difficulty) is True:
+        score(difficulty)
+        print("You won!")
+    else: print("You lost")
 if game == 3:
-    print("You won!" if roulette(difficulty) is True else "You lost")
+    if roulette(difficulty) is True:
+        score(difficulty)
+        print("You won!")
+    else: print("You lost")
 
