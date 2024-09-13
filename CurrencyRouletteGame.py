@@ -8,8 +8,11 @@ def get_money_interval(difficulty, t):
     rate = c.convert(t, 'USD', 'ILS')
     interval = (rate - (5 - difficulty), rate + (5 - difficulty))
     return interval
+
+
 def generate_number():
     return random.randint(1, 100)
+
 
 def get_guess_from_user(t):
     while True:
@@ -21,7 +24,6 @@ def get_guess_from_user(t):
             continue
     return guess
 
-#get_money_interval(5, 10)
 
 def play(difficulty):
     t = generate_number()

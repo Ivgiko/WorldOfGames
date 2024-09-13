@@ -4,7 +4,8 @@ from flask import render_template
 # creates a Flask application
 app = Flask(__name__, template_folder='templates/')
 
-@app.route("/")
+
+@app.route("/score")
 def score_server():
     file = open('Utils.py', "r")
     read = file.read()
@@ -18,7 +19,6 @@ def score_server():
             file.close()
     except FileNotFoundError:
         return render_template('error.html', ERROR="No Score file found")
-
 
 
 # run the application
