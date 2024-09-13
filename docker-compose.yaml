@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    networks:
+        - worldofgames_default
+    volumes:
+      - .:/app
+    environment:
+      FLASK_ENV: development
+    command: python MainScores.py
+
+networks:
+  worldofgames_default:
+    driver: bridge
