@@ -17,10 +17,10 @@ def test_scores_service(url):
 def main():
     url = "http://127.0.0.1:5000"
     if test_scores_service(url):
-        print("cool")
+        print("cool!")
         return 0
     else:
-        print("damn")
+        print("damn!")
         return -1
 
 
