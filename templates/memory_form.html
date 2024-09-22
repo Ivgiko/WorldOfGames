@@ -1,29 +1,17 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Memory Game</title>-->
-<!--</head>-->
-<!--<body>-->
-<!--    <h1>Enter your {{ difficulty }} guesses (between 1 and 101):</h1>-->
-
-<!--    {% if error %}-->
-<!--    <p style="color:red;">{{ error }}</p>-->
-<!--    {% endif %}-->
-
-<!--    <form method="POST">-->
-<!--        {% for i in range(difficulty) %}-->
-<!--        <label for="guess{{ i+1 }}">Guess {{ i+1 }}:</label>-->
-<!--        <input type="number" name="guess{{ i+1 }}" min="1" max="101" required><br>-->
-<!--        {% endfor %}-->
-<!--        <input type="submit" value="Submit Guesses">-->
-<!--    </form>-->
-<!--</body>-->
-<!--</html>-->
-<form method="POST" action="{{ url_for('memory_input', difficulty=difficulty) }}">
-    {% for i in range(difficulty) %}
-    <label for="guess{{ i+1 }}">Guess {{ i+1 }}:</label>
-    <input type="number" name="guess{{ i+1 }}" min="1" max="101" required><br>
-    {% endfor %}
-    <input type="submit" value="Submit Guesses">
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Memory Game</title>
+</head>
+<body>
+    <h1>Enter your guesses:</h1>
+    <form method="POST" action="{{ url_for('memory_input', difficulty=difficulty) }}">
+        {% for i in range(difficulty) %}
+            <label for="guess{{ i+1 }}">Guess {{ i+1 }}:</label>
+            <input type="number" name="guess{{ i+1 }}" min="1" max="101" required><br>
+        {% endfor %}
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

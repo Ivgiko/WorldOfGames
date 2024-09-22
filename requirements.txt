@@ -1,0 +1,6 @@
+flask
+requests
+sqlalchemy
+mysql-connector-python==8.0.33
+forex-python
+alembic==1.7.7

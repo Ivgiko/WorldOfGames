@@ -11,7 +11,7 @@
     <script>
         // Automatically redirect to the form for user guesses after 3 seconds
         setTimeout(function() {
-            window.location.href = "{{ url_for('memory_form', difficulty=difficulty) }}";
+            window.location.href = "{{ url_for('memory_form', difficulty=difficulty) }}";  // Redirect to the form input page
         }, 3000);
     </script>
 </body>

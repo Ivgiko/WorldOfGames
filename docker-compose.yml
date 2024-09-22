@@ -1,0 +1,94 @@
+version: '3.8'
+
+services:
+  flask_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=mysql+mysqlconnector://user:userpassword@db:3306/game_scores
+    networks:
+      - app_network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5000/ || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "8777:5000"
+    volumes:
+      - C:/shared:/app/shared  # Ensure this shared folder is available for flask_app
+
+  memory:
+    build:
+      context: ./memory
+      dockerfile: Dockerfile
+    volumes:
+      - C:/shared:/app/shared  # Re-introduce shared folder for memory
+    networks:
+      - app_network
+    ports:
+      - "5001:5001"  # Ensure the correct port is exposed
+
+  guess:
+    build:
+      context: ./guess
+      dockerfile: Dockerfile
+    volumes:
+      - C:/shared:/app/shared  # Re-introduce shared folder for guess
+    networks:
+      - app_network
+    ports:
+      - "5002:5002"  # Ensure the correct port is exposed
+
+  roulette:
+    build:
+      context: ./roulette
+      dockerfile: Dockerfile
+    volumes:
+      - C:/shared:/app/shared  # Re-introduce shared folder for roulette
+    networks:
+      - app_network
+    ports:
+      - "5003:5003"  # Ensure the correct port is exposed
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: game_scores
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpassword
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app_network
+
+  tests:
+    build:
+      context: ./tests
+    depends_on:
+      flask_app:
+        condition: service_healthy  # Ensure Flask is fully ready before running tests
+    networks:
+      - app_network
+    environment:
+      - URL=http://flask_app:5000
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix  # For headless display using X11
+
+volumes:
+  shared:
+    driver: local
+
+networks:
+  app_network:
+    driver: bridge
